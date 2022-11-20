@@ -1,13 +1,14 @@
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/test')
 
-var scp = mongoose.model('scp', { name: String })
+var schema = mongoose.Schema({ name: String })
+schema.methods.meow = function(){
+    console.log(this.get("name") + ": ...")
+}
 
-var kitty = new scp({ name: 'scp-191' })
+var scp = mongoose.model('scp', schema)
+
+var kitty = new scp({ name: 'Kratos' })
 kitty.save(function (err) {
-    if (err) {
-        console.log(err)
-    } else {
-        console.log('...')
-    }
+    kitty.meow()
 })
