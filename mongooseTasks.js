@@ -1,14 +1,15 @@
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect('mongodb://localhost/test1')
+var scp = require("./models/scp").scp
 
-var schema = mongoose.Schema({ name: String })
-schema.methods.meow = function(){
-    console.log(this.get("name") + ": ...")
-}
 
-var scp = mongoose.model('scp', schema)
+var scp = new scp({
+title: "scp-191",
+nick: "scp-191"
+})
 
-var kitty = new scp({ name: 'Kratos' })
-kitty.save(function (err) {
-    kitty.meow()
+
+console.log(scp)
+scp.save(function(err, scp, affected){
+    console.log(scp.title)
 })
