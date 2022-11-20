@@ -8,9 +8,9 @@ const client = new MongoClient(uri)
 async function run() {
 try {
 await client.connect();
-var database = client.db("scp");
+var database = client.db("scp-191");
 database.dropDatabase()
-database = client.db("scp");
+database = client.db("scp-191");
 const scp = database.collection("scp");
 const result = await scp.insertMany(data);
 console.log(`${result.insertedCount} documents were inserted`);
