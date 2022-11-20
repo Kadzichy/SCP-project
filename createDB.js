@@ -10,7 +10,7 @@ await client.connect();
 var database = client.db("scp");
 database.dropDatabase()
 database = client.db("scp");
-const SCP = database.collection("cats");
+const SCP = database.collection("scp");
 const result = await SCP.insertOne({name:"scp"});
 console.log(`${result} documents were inserted`);
 } finally {
