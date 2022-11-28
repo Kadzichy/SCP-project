@@ -23,16 +23,13 @@
       <li class="nav-item">
       <a class="nav-link" href="/">Главная</a>
       </li>
-      <li class="nav-item">
-      <a class="nav-link" href="/SCP/SCP-191">SCP-191</a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="/SCP/SCP-005">SCP-005</a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="/SCP/SCP-808">SCP-808</a>
-      </li>
-      </ul>
+      <<% menu.forEach(function(scp){ %>
+        <li class="nav-item">
+            <a class="nav-link" href="/scp/<%=scp.nick%>">
+                <%=scp.title%>
+            </a>
+        </li>
+        <% }) %>
       <ul class="navbar-nav navbar-right">
       <li>
       <a class="nav-link" href="">Войти</a>
