@@ -1,3 +1,4 @@
+/*
 var express = require('express');
 var router = express.Router();
 var scp = require("../models/scp").SCP
@@ -20,6 +21,6 @@ router.get('/:nick', function(req, res, next) {
         })
     })
 });
-
+/*
 
 module.exports = router;
