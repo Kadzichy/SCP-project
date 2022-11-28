@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.send('Новый маршрутизатор, для маршрутов, начинающихся с gods');
+    res.send('Новый маршрутизатор, для маршрутов, начинающихся с scp');
 });
 
 /* Страница scp */
