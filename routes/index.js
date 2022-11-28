@@ -1,12 +1,18 @@
 var express = require('express');
-var router = express.Router();
+var router = express.Router()
+var SCP = require("../models/scp").SCP
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    scp.find({},{_id:0,title:1,nick:1},function(err,menu){
+        res.render('index', {
+                                title: 'Express',
+                                menu: menu
+                            });
+    })
 });
+/*
 
-/* Страница SCP-191 */
 router.get('/SCP-191', function(req, res, next) {
   res.render('SCP', {
       title: "SCP-191 - Ребёнок-киборг",
@@ -15,7 +21,7 @@ router.get('/SCP-191', function(req, res, next) {
   })
 });
 
-/* Страница SCP-005 */
+
 router.get('/SCP-005', function(req, res, next) {
   res.render('SCP', {
       title: "SCP-005 - Отмычка",
@@ -24,7 +30,7 @@ router.get('/SCP-005', function(req, res, next) {
   })
 });
 
-/* Страница SCP-808 */
+
 router.get('/SCP-808', function(req, res, next) {
   res.render('SCP', {
       title: "SCP-808 - Механический хор",
@@ -32,6 +38,5 @@ router.get('/SCP-808', function(req, res, next) {
       desc: "SCP-808 представляет собой механическое сооружение высотой приблизительно в шестнадцать (16) метров и площадью приблизительно пять на шесть метров (30 м2). Форма объекта напоминает цилиндр, на последних трех метрах переходящий в конус."
   })
 });
-
-
+/*
 module.exports = router;
