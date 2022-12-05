@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-var scp = require("../models/scp").God
+var scp = require("../models/scp").scp
 
 
 /* GET home page. */
@@ -9,7 +9,6 @@ router.get('/', function(req, res, next) {
         req.session.greeting = "Hi!!!",
         res.cookie('greeting','Hi!!!').render('index', {
                                 title: 'Express',
-                                menu: menu,
                                 counter: req.session.counter,
                             });
                             
