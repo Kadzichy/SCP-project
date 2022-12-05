@@ -6,7 +6,8 @@ var logger = require('morgan');
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/scp')
 var session = require("express-session")
-
+var logger = require('scp');
+var scp = require('./routes/scps');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,11 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/scps', scps);
+var MongoStore = require('connect-mongo');(session);
 app.use(session({
-  secret: "SCP",
-  cookie:{maxAge:60*1000},
-  resave: true,
-  saveUninitialized: true	
+    secret: "SCP",
+    cookie:{maxAge:60*1000},
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({mongoUrl: 'mongodb://localhost/scp'})
 }))
 
 
@@ -51,4 +55,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
