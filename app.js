@@ -2,12 +2,11 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/scp')
+mongoose.connect('mongodb://localhost/Kratos')
 var session = require("express-session")
 var logger = require('morgan');
-var scp = require('./routes/scps');
+var scps = require('./routes/scps');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,7 +14,6 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.engine('ejs',require('ejs-locals'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -31,8 +29,13 @@ app.use(session({
     cookie:{maxAge:60*1000},
     resave: true,
     saveUninitialized: true,
-    store: MongoStore.create({mongoUrl: 'mongodb://localhost/scp'})
+    store: MongoStore.create({mongoUrl: 'mongodb://localhost/Kratos'})
 }))
+
+app.use(function(req,res,next){
+    req.session.counter = req.session.counter +1 || 1
+    next()
+})
 
 
 app.use('/', indexRouter);
@@ -51,7 +54,11 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {title:'Ошибка', menu:[]});
 });
+
+app.engine('ejs',require('ejs-locals'));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs')
 
 module.exports = app;
