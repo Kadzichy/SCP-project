@@ -6,7 +6,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/scp')
 var session = require("express-session")
-var logger = require('scp');
+var logger = require('morgan');
 var scp = require('./routes/scps');
 
 var indexRouter = require('./routes/index');
