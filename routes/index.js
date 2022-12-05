@@ -1,18 +1,19 @@
-var express = require('express');
-const { scp } = require('../models/scp');
+var express = require('express')
 var router = express.Router()
-var SCP = require("../models/scp").SCP
+var scp = require("../models/scp").God
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  scp.find({},{_id:0,title:1,nick:1},function(err,menu){
-      req.session.greeting = "Hi!!!",
-      res.cookie('greeting','Hi!!!').render('index', {
-                              title: 'Express',
-                              menu: menu
-                          });
-                          
-  })
+    scp.find({},{_id:0,title:1,nick:1},function(err,menu){
+        req.session.greeting = "Hi!!!",
+        res.cookie('greeting','Hi!!!').render('index', {
+                                title: 'Express',
+                                menu: menu,
+                                counter: req.session.counter,
+                            });
+                            
+    })
 });
 /*
 
