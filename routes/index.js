@@ -1,15 +1,16 @@
 var express = require('express');
+const { scp } = require('../models/scp');
 var router = express.Router()
 var SCP = require("../models/scp").SCP
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    scp.find({},{_id:0,title:1,nick:1},function(err,menu){
-        res.render('index', {
-                                title: 'Express',
-                                menu: menu
-                            });
-    })
+  scp.find({},{_id:0,title:1,nick:1},function(err,menu){
+      res.cookie('greeting','Hi!!!').render('index', {
+                              title: 'Express',
+                              menu: menu
+                          });
+  })
 });
 /*
 
