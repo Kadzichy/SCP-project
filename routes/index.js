@@ -14,6 +14,14 @@ router.get('/', function(req, res, next) {
                             
     })
 });
+
+/* GET login/registration page. */
+router.get('/logreg', function(req, res, next) {
+  res.render('logreg',{title: 'Вход'});
+});
+
+
+
 /*
 
 router.get('/SCP-191', function(req, res, next) {
@@ -42,4 +50,4 @@ router.get('/SCP-808', function(req, res, next) {
   })
 });
 /*
-module.exports = router;
+ module.exports = router;
