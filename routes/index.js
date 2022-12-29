@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var scp = require("../models/scp").scp
+var User = require("./../models/user").User
 
 
 /* GET home page. */
@@ -18,6 +19,13 @@ router.get('/', function(req, res, next) {
 /* GET login/registration page. */
 router.get('/logreg', function(req, res, next) {
   res.render('logreg',{title: 'Вход'});
+});
+
+/* POST logout. */
+router.post('/logout', function(req, res, next) {
+  req.session.destroy()
+  res.locals.user = null
+  res.redirect('/')
 });
 
 /* POST login/registration page. */
