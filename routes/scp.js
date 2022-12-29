@@ -1,10 +1,11 @@
 var express = require('express')
 var router = express.Router()
 var scp = require("../models/scp").scp
+var checkAuth = require("./../middleware/checkAuth.js")
 //var async = require("async")
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/:nick',checkAuth, function(req, res, next) {
     res.send('Новый маршрутизатор, для маршрутов, начинающихся с scps')
 });
 
