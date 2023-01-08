@@ -1,62 +1,50 @@
 var express = require('express')
 var router = express.Router()
-var scp = require("../models/scp").scp
-var User = require("./../models/user").User
+var db = require("../mySQLConnect.js");
 
 
-/* GET home page. */
+
+
 router.get('/', function(req, res, next) {
-    scp.find({},{_id:0,title:1,nick:1},function(err,menu){
-        req.session.greeting = "Hi!!!",
-        res.cookie('greeting','Hi!!!').render('index', {
-                                title: 'Express',
-                                counter: req.session.counter,
-                            });
-                            
-    })
+  res.render('index', { title: 'SCP', counter:req.session.counter  });
 });
 
 /* GET login/registration page. */
 router.get('/logreg', function(req, res, next) {
-  res.render('logreg',{title: 'Вход'});
-});
-
-/* POST logout. */
-router.post('/logout', function(req, res, next) {
-  req.session.destroy()
-  res.locals.user = null
-  res.redirect('/')
+res.render('logreg',{title: 'Вход', error: null});
 });
 
 /* POST login/registration page. */
 router.post('/logreg', function(req, res, next) {
   var username = req.body.username
   var password = req.body.password
-  router.post('/logreg', function(req, res, next) {
-  var username = req.body.username
-  var password = req.body.password
-  User.findOne({username:username},function(err,user){
-      if(err) return next(err)
-      if(user){
-          if(user.checkPassword(password)){
-              req.session.user = user._id
-              res.redirect('/')
+  // console.log("hey")
+  db.query (`SELECT * FROM user WHERE user.username = '${req.body.username}'`, function(err,users){
+        if(err) return next(err)
+        // console.log("hey1")
+        // console.log(users)
+        // console.log(err)
+        if(users.length > 0) {
+          // console.log("hey3")
+          var user = users[0];
+          if (password == user.password){
+            req.session.user = user.user_id
+            res.redirect('/')
           } else {
-                    res.render('logreg', {title: 'Вход'})
+            res.render('logreg', {title: 'Вход', error: 'Пароль не верный'})
           }
-      } else {
-          var user = new User({username:username,password:password})
-          user.save(function(err,user){
-              if(err) return next(err)
-              req.session.user = user._id
-              res.redirect('/')
-          })        
-    }
-  })
+        } else {
+          db.query(`INSERT INTO user (username, password) VALUES ('${username}', '${password}')`, function(err, user){
+            // console.log(user)
+            // console.log(err)
+            if(err) return next(err)
+            req.session.user = user.user_id
+            res.redirect('/')
+          })
+        }
+})
 });
-
-
-});
+module.exports = router;
 
 
 
@@ -88,4 +76,3 @@ router.get('/SCP-808', function(req, res, next) {
   })
 });
 /*
- module.exports = router;
