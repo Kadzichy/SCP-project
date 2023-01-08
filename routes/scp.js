@@ -1,26 +1,34 @@
-var express = require('express')
-var router = express.Router()
-var scp = require("../models/scp").scp
-var checkAuth = require("./../middleware/checkAuth.js")
+var express = require('express');
+var router = express.Router();
+var db = require('../mySQLConnect.js');
+//var checkAuth = require("./../middleware/checkAuth.js")
 //var async = require("async")
 
 /* GET users listing. */
-router.get('/:nick',checkAuth, function(req, res, next) {
-    res.send('Новый маршрутизатор, для маршрутов, начинающихся с scps')
+router.get('/', function(req, res, next) {
+    res.send('Новый маршрутизатор, для маршрутов, начинающихся с scps');
 });
 
-/* Страница scp */
-router.get('/:nick', function(req, res, next) {
-    scp.findOne({nick:req.params.nick}, function(err,scp){
+/* Страница ведущих */
+router.get('/:nick' , function(req, res, next) {
+    db.query(`SELECT * FROM scps WHERE scps.nick = '${req.params.nick}'`, (err, scps) => {
+        if(err) {
+        console.log(err);
         if(err) return next(err)
-        if(!scp) return next(new Error("Нет такого объекта"))
-        res.render('sco', {
-            title: scp.title,
-            picture: scp.avatar,
-            desc: scp.desc
+        }else {
+            if(err) return next(err)
+            if(scps.lenght == 0) return next(new Error("Нет такого обьекта"))
+            var scp = scps[0];
+            res.render('god', {
+                title: scp.title,
+                picture: scp.avatar,
+                desc: scp.about
+                })
+            }
         })
     })
-})
+    
 
 
-module.exports = router
+
+module.exports = router;
